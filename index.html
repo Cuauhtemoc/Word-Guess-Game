@@ -4,10 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script type="text/javascript" src="assets\javascript\game.js"></script>
     <title>Document</title>
 </head>
 <body>
+    <div class = "container" id = "container">
+        <h1>Word Guess Game</h1>
+        <h2 id = "gameInfo">Press any key to start</h2>
+        <div id = "container-game">
+            <p id ="current-Word"> </p>
+            <p id = "guessesRemaining"> </p>
+            <p id = "guessesSoFar"> </p>
+            
+            <input type="text" name="solve" id ="solver" >
+            <input type="button" value="solve" onclick="game.solve()">
+            
+            <h2 id = "win-lose"></h2>
+        </div>
+    </div>
+    <script type="text/javascript" src="assets\javascript\game.js"></script>
 
 </body>
 </html>
