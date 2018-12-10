@@ -1,0 +1,7 @@
+html, body{
+    height: 100vh;
+    background-image: url(../images/FantasyCities74381.jpg);
+    background-size: cover;
+    overflow: hidden;
+    font-family: 'Shadows Into Light', cursive;
+}
