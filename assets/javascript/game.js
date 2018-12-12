@@ -10,14 +10,15 @@ var wordlength = 0;
 var updateText;
 var win = true;
 var isTyping = false; 
+
 var game = {
     movies : [{"title":"alien", "image": "assets/images/Alien.jpg"},
     {"title":"beetlejuice", "image": "assets/images/BeetleJuicejpg.jpg"},
-    {"title":"Candyman", "image": "assets/images/CandyMan.jpg"},
+    {"title":"candyman", "image": "assets/images/CandyMan.jpg"},
     {"title":"gremlins", "image": "assets/images/Gremlins.jpg"},
     {"title":"poltergeist", "image": "assets/images/Poltergeist.jpg"},
-    {"title":"The Exorcist", "image": "assets/images/TheExorcist.jpg"},
-    {"title":"The Thing", "image": "assets/images/TheThing.jpg"},
+    {"title":"theexorcist", "image": "assets/images/TheExorcist.jpg"},
+    {"title":"thething", "image": "assets/images/TheThing.jpg"},
                 ],
     gameStart: function () {
      
@@ -34,6 +35,7 @@ var game = {
         this.chooseWord();
         this.displayWord();
         this.textUpdate();
+        this.addImage();
     },
     addImage: function(){
         img = document.getElementById("moviePoster");
@@ -58,13 +60,13 @@ var game = {
     },
     textUpdate: function (){
         updateText = document.getElementById("current-Word");
-        updateText.textContent = "Current Word: " + currentWord.join("  ");
+        updateText.textContent = "Current Word: " + currentWord.join(" ");
         updateText = document.getElementById("guessesRemaining");
         updateText.textContent = "Guesses Remaining: " + totalGuesses;
         updateText = document.getElementById("guessesSoFar");
         updateText.textContent = "Guesses so far: " + guessesSoFar.join(" ");
     },
-    chooseWord: function () {
+    chooseWord:  function () {
         word = this.movies[wordIndex].title;
         console.log(typeof word);
     },
@@ -142,7 +144,6 @@ document.onkeypress = function(event){
         game.checkForLetter(currentGuess);
         game.displayLetter(currentGuess);
         game.textUpdate();
-        game.addImage();
         console.log(currentGuess);
         console.log(wordAsArray);
         console.log(currentWord);
@@ -150,4 +151,5 @@ document.onkeypress = function(event){
 }
 game.chooseWord();
 game.displayWord();
+game.addImage();
 
