@@ -1,7 +1,7 @@
 var currentWord = [];
 var guessesSoFar = [];
 var currentGuess = "";
-var totalGuesses = 10;
+var totalGuesses = 5;
 var totalCorrect = 0;
 var questions = [];
 var wordIndex = 0;
@@ -13,6 +13,7 @@ var win = true;
 var isTyping = false; 
 var startGame = false;
 var gameEnd = false;
+var correctGuess = false;
 var  bgMusic;
 
 var game = {
@@ -27,7 +28,7 @@ var game = {
     gameStart: function () {
         guessesSoFar = [];
         currentWord = [];
-        totalGuesses = 10;
+        totalGuesses = 5;
         wordIndex +=1;
         currentGuess = " ";
         word = ""     
@@ -66,11 +67,9 @@ var game = {
     },
     solving: function (){
         isTyping = true;
-        console.log(isTyping);
     },
     notSolving: function (){
         isTyping = false;
-        console.log(isTyping);
     },
     textUpdate: function (){
         updateText = document.getElementById("current-Word");
@@ -106,24 +105,29 @@ var game = {
        for(i = 0; i <wordAsArray.length; i++){
            if (_string === wordAsArray[i])
            {
-               currentWord.splice(i,1,_string)    
+               currentWord.splice(i,1,_string) 
+               correctGuess = true;   
            }
 
        }
-       if(_string != " " && totalGuesses > 0){
+       if(_string != " " && totalGuesses > 0 && correctGuess === false){
             totalGuesses--;
-            if(currentWord.join("") === word){
+ 
+        }
+        else if(currentWord.join("") === word)
+        {
             win = true;
             this.reset();
-            }
+           
         }
         else if (totalGuesses === 0)
         {
             win = false;
-            this.reset();
-            
-        }  
-        
+            this.reset();   
+        }
+        else {
+            correctGuess = false;
+        }      
     },
     solve: function()
     {
@@ -141,7 +145,6 @@ var game = {
         else if (str.value != word)
         {
             totalGuesses -=1;
-            updateText = document.getElementById("win-lose");
             updateText.textContent = "Nope, try again";
             this.textUpdate();
         }

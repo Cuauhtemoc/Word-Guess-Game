@@ -10,10 +10,13 @@
     <title>Hang Man</title>
 </head>
 <body id = "container">
+    <div class = "row">
+        <a class ="navbar bg-dark text-light border col-12 m-2" href = "Cuauhtemoc.git.io\Responsive-PortFolio\portfoltio.html">Back to Portfolio</a>
+    </div>
     <div class = "row" id = "container" >
-        <div class  = "mt-3 col-4 container border bg-dark text-light" id = "container-game ">
-            <h3 class="pt-1">Guess the movie!</h1>
-            <h4 id = "gameInfo">Press any key to start</h2>
+        <div class  = "mt-3 ml-auto col-4 text-center container border bg-dark text-light" id = "container-game ">
+            <h3 class="mt-3 p-1">Guess the movie!</h3>
+            <h4 id = "gameInfo">Press any key to start</h4>
             <p id ="current-Word"> </p>
             <p id = "guessesRemaining"> </p>
             <p id = "guessesSoFar"> </p>
@@ -22,7 +25,7 @@
             <input type="button" value="solve" onclick="game.solve()">
             <h2 id = "win-lose" class ="pt-1"></h2>
         </div>           
-        <div class = "mx-auto mt-3" >
+        <div class = "mr-auto mt-3" >
                 <img class = "border" id ="moviePoster" src="#">
         </div>
     </div>
