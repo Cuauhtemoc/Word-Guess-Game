@@ -18,7 +18,7 @@ var  bgMusic;
 
 var game = {
     movies : [{"title":"hellraiser", "image": "assets/images/hellraiser.jpg"},
-    {"title":"alien", "image": "assets/images/alien.jpg"},
+    {"title":"alien", "image": "assets/images/alien-update.jpg"},
     {"title":"candyman", "image": "assets/images/CandyMan.jpg"},
     {"title":"gremlins", "image": "assets/images/Gremlins.jpg"},
     {"title":"poltergeist", "image": "assets/images/Poltergeist.jpg"},
