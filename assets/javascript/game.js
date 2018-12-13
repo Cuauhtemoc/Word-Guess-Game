@@ -164,10 +164,13 @@ var game = {
 };
 game.chooseWord();
 game.displayWord();
-game.addImage();
+img = document.getElementById("moviePoster");
+img.src = "assets/images/startingImage.jpg";
+
 document.getElementById("solver").addEventListener("click", game.solving, true); 
 document.getElementById("container").addEventListener("click", game.notSolving, true);
 document.onkeypress = function(event){
+    game.addImage();
     if (gameEnd === false)
     {
         game.addSound();
