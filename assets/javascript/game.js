@@ -162,9 +162,9 @@ var game = {
         }
     },
 };
-game.addImage();
 game.chooseWord();
 game.displayWord();
+game.addImage();
 document.getElementById("solver").addEventListener("click", game.solving, true); 
 document.getElementById("container").addEventListener("click", game.notSolving, true);
 document.onkeypress = function(event){
