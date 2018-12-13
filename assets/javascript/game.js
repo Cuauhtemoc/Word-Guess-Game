@@ -2,6 +2,7 @@ var currentWord = [];
 var guessesSoFar = [];
 var currentGuess = "";
 var totalGuesses = 10;
+var totalCorrect = 0;
 var questions = [];
 var wordIndex = 0;
 var word = "";
@@ -10,18 +11,20 @@ var wordlength = 0;
 var updateText;
 var win = true;
 var isTyping = false; 
+var startGame = false;
+var gameEnd = false;
+var  bgMusic;
 
 var game = {
-    movies : [{"title":"alien", "image": "assets/images/Alien.jpg"},
-    {"title":"beetlejuice", "image": "assets/images/BeetleJuicejpg.jpg"},
+    movies : [{"title":"alien", "image": "assets/images/alien.jpg"},
+    {"title":"hellraiser", "image": "assets/images/hellraiser.jpg"},
     {"title":"candyman", "image": "assets/images/CandyMan.jpg"},
     {"title":"gremlins", "image": "assets/images/Gremlins.jpg"},
     {"title":"poltergeist", "image": "assets/images/Poltergeist.jpg"},
-    {"title":"theexorcist", "image": "assets/images/TheExorcist.jpg"},
-    {"title":"thething", "image": "assets/images/TheThing.jpg"},
+    {"title":"re-animator", "image": "assets/images/re-animator.jpg"},
+    {"title":"carrie", "image": "assets/images/carrie.jpg"},
                 ],
     gameStart: function () {
-     
         guessesSoFar = [];
         currentWord = [];
         totalGuesses = 10;
@@ -32,14 +35,25 @@ var game = {
     reset: function(){
         this.winLose();
         this.gameStart();
+        this.textUpdate();
         this.chooseWord();
         this.displayWord();
-        this.textUpdate();
         this.addImage();
     },
     addImage: function(){
+        
         img = document.getElementById("moviePoster");
         img.src = this.movies[wordIndex].image;
+    },
+    addMusic: function(){
+        bgMusic = new Audio("assets/sounds/spookywind.wav");
+        bgMusic.loop = true;
+        bgMusic.play();
+        console.log(bgMusic);
+    },
+    addSound: function(){
+        bgMusic = new Audio("assets/sounds/keypress.wav");
+        bgMusic.play();
     },
     gameState: function (){
         updateText = document.getElementById("current-Word");
@@ -65,8 +79,16 @@ var game = {
         updateText.textContent = "Guesses Remaining: " + totalGuesses;
         updateText = document.getElementById("guessesSoFar");
         updateText.textContent = "Guesses so far: " + guessesSoFar.join(" ");
+        updateText = document.getElementById("total-correct");
+        updateText.textContent = "Score: " + totalCorrect;
     },
     chooseWord:  function () {
+        if (wordIndex >= this.movies.length )
+        {
+            gameEnd = true;
+            updateText = document.getElementById("win-lose");
+            updateText.textContent = "Game Over";
+        }
         word = this.movies[wordIndex].title;
         console.log(typeof word);
     },
@@ -86,9 +108,10 @@ var game = {
            {
                currentWord.splice(i,1,_string)    
            }
+
        }
        if(_string != " " && totalGuesses > 0){
-        totalGuesses--;
+            totalGuesses--;
             if(currentWord.join("") === word){
             win = true;
             this.reset();
@@ -99,7 +122,8 @@ var game = {
             win = false;
             this.reset();
             
-        }   
+        }  
+        
     },
     solve: function()
     {
@@ -127,6 +151,7 @@ var game = {
         if(win === true){
             updateText = document.getElementById("win-lose");
             updateText.textContent = "Awesome job! The word was " + word;
+            totalCorrect++;
         }
         else{
             updateText = document.getElementById("win-lose");
@@ -134,22 +159,32 @@ var game = {
         }
     },
 };
+game.addImage();
+game.chooseWord();
+game.displayWord();
 document.getElementById("solver").addEventListener("click", game.solving, true); 
 document.getElementById("container").addEventListener("click", game.notSolving, true);
 document.onkeypress = function(event){
-    if(isTyping === false){
-        currentGuess = event.key;
-        updateText = document.getElementById("gameInfo");
-        updateText.textContent = "Type a letter to guess!"
-        game.checkForLetter(currentGuess);
-        game.displayLetter(currentGuess);
+    if (gameEnd === false)
+    {
+        game.addSound();
         game.textUpdate();
-        console.log(currentGuess);
-        console.log(wordAsArray);
-        console.log(currentWord);
+         updateText = document.getElementById("gameInfo");
+        updateText.textContent = "Type a letter to guess!"
+        if(isTyping === false && startGame === true){
+            currentGuess = event.key;
+           
+            game.checkForLetter(currentGuess);
+            game.displayLetter(currentGuess);
+            game.textUpdate();
+        }
+        else if (startGame === false )
+        {
+            startGame = true;
+            game.addMusic();
+        }
     }
-}
-game.chooseWord();
-game.displayWord();
-game.addImage();
+};
+
+
 
