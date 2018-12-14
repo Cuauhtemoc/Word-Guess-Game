@@ -15,9 +15,9 @@ var startGame = false;
 var gameEnd = false;
 var correctGuess = false;
 var  bgMusic;
-
+/*Set up game object*/
 var game = {
-    movies : [{"title":"hellraiser", "image": "assets/images/hellraiser.jpg"},
+    movies : [{"title":"hellraiser", "image": "assets/images/hellraiser.jpg"}, //Set up object of movies and titles to reference 
     {"title":"alien", "image": "assets/images/alien-update.jpg"},
     {"title":"candyman", "image": "assets/images/CandyMan.jpg"},
     {"title":"gremlins", "image": "assets/images/Gremlins.jpg"},
@@ -25,6 +25,7 @@ var game = {
     {"title":"re-animator", "image": "assets/images/re-animator.jpg"},
     {"title":"carrie", "image": "assets/images/carrie.jpg"},
                 ],
+    //set the game of for new round
     gameStart: function () {
         guessesSoFar = [];
         currentWord = [];
@@ -33,6 +34,7 @@ var game = {
         currentGuess = " ";
         word = ""     
     },
+    //call functions to reset the game
     reset: function(){
         this.winLose();
         this.gameStart();
@@ -41,36 +43,32 @@ var game = {
         this.displayWord();
         this.addImage();
     },
-    addImage: function(){
-        
+    //add the current image to the screen
+    addImage: function(){ 
         img = document.getElementById("moviePoster");
         img.src = this.movies[wordIndex].image;
     },
+    //background music
     addMusic: function(){
         bgMusic = new Audio("assets/sounds/spookywind.wav");
         bgMusic.loop = true;
         bgMusic.play();
         console.log(bgMusic);
     },
+    //sound for key press
     addSound: function(){
         bgMusic = new Audio("assets/sounds/keypress.wav");
         bgMusic.play();
     },
-    gameState: function (){
-        updateText = document.getElementById("current-Word");
-        updateText.textContent = "";
-        updateText = document.getElementById("guessesRemaining");
-        updateText.textContent = "";
-        updateText = document.getElementById("guessesSoFar");
-        updateText.textContent = "";
-        updateText.classList.add("gameover");  
-    },
+    //Check to see if user is typing into the input box
     solving: function (){
         isTyping = true;
     },
+    //Check to see if the user is taking a guess
     notSolving: function (){
         isTyping = false;
     },
+    //update html to display current gamestate to the user
     textUpdate: function (){
         updateText = document.getElementById("current-Word");
         updateText.textContent = "Current Word: " + currentWord.join(" ");
@@ -81,6 +79,7 @@ var game = {
         updateText = document.getElementById("total-correct");
         updateText.textContent = "Score: " + totalCorrect;
     },
+    //pick the current for for the game
     chooseWord:  function () {
         if (wordIndex >= this.movies.length )
         {
@@ -91,15 +90,18 @@ var game = {
         word = this.movies[wordIndex].title;
         console.log(typeof word);
     },
+    //display word as it is being guessed
     displayWord: function(){
         wordlength = word.length;
         for (i = 0; i < wordlength; i++){
             currentWord.push("_");
         }
     },
+    //display the letters the user has guessed
     displayLetter: function (_string) {
         guessesSoFar.push(_string);
     },
+    //Check to see if the letter is in the current word
     checkForLetter: function(_string) {
        wordAsArray = word.split("");
        for(i = 0; i <wordAsArray.length; i++){
@@ -129,6 +131,7 @@ var game = {
             correctGuess = false;
         }      
     },
+    //Check to see if the user solved the word correctly using the input box
     solve: function()
     {
         str = document.getElementById("solver");
@@ -150,6 +153,7 @@ var game = {
         }
 
     },
+    //Check if the user won the round
     winLose: function(){
         if(win === true){
             updateText = document.getElementById("win-lose");
@@ -162,13 +166,16 @@ var game = {
         }
     },
 };
+//functions calls to start the game properly
 game.chooseWord();
 game.displayWord();
 img = document.getElementById("moviePoster");
 img.src = "assets/images/startingImage.jpg";
-
+//listening to see if the user is typing in the input box or not
 document.getElementById("solver").addEventListener("click", game.solving, true); 
 document.getElementById("container").addEventListener("click", game.notSolving, true);
+
+//update the game when a user pressed a key
 document.onkeypress = function(event){
     game.addImage();
     if (gameEnd === false)
